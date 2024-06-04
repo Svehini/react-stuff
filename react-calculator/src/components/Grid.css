@@ -1,0 +1,36 @@
+table {
+    width: 30%;
+    margin: auto;
+    border-collapse: collapse;
+    background-color: beige;
+    border: 5px solid black;
+}
+
+.cell {
+    text-align: center;
+    font-size: 3em;    
+    row-gap: 2px;
+    column-gap: 2px;
+    border: 2px solid black;
+    margin: 2px;
+    color: black;
+}
+
+h1 {
+    margin: auto;
+    font-size: 3em;
+    text-align: center;
+    padding: 50px;
+}
+
+.math-bar {
+    width: 30%;
+    margin: auto;
+    border: 5px solid #000000;
+    border-bottom: none;
+    text-align: center;
+    font-size: 3em;
+    background-color: lightgrey;
+    overflow: hidden;
+    white-space: nowrap;
+}
