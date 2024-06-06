@@ -39,3 +39,22 @@
     justify-content: center;
     gap: 20px;
 }
+
+.top-bar{
+    display:flex;
+    margin: auto;
+    justify-content: center;
+}
+
+.main-title{
+    width: 90%;
+}
+
+.info-button{
+    font-size: 2em;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    border: none;
+    background-color: white;
+    padding: 10px;
+
+}

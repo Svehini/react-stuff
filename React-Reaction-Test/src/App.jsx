@@ -5,6 +5,7 @@ import GridMaker from "./components/Grid.jsx";
 import TitleMaker from "./components/TitleMaker.jsx";
 import StartButton from "./components/StartButton.jsx";
 import ResetButton from "./components/ResetButton.jsx";
+import PopUp from "./components/PopUp.jsx";
 import "./components/MainGameDesign.css";   // Here are the designs for elements used directly in this code such as the start/reset button
 
 function App(){
@@ -13,8 +14,7 @@ function App(){
   let mainTitle = TitleMaker(); // This points to the TitleMaker code, and retrieves the Title
 
   // This is the grid for the game
-  let GridRows = 5;
-  let GridCols = 5;
+  let GridNum = 5;
 
   // This sets the time
   let time = 30.0;
@@ -25,6 +25,8 @@ function App(){
   const [specialButtonCol, setSpecialButtonCol] = useState(-1); // This is its column
   const [timeLeft, setTimeLeft] = useState(0);    // This keeps track of time left, and makes it possible to diplay it using useState
   const [points, setPoints] = useState(0);  // These are the points, aka correct number of 'special buttons' pressed - wrong buttons pressed
+
+  const [isPopUpOpen, setIsPopUpOpen] = useState(true);
 
 
   // This keeps track of the 30 sec timer, and will stop the game when the timer goes out
@@ -43,11 +45,16 @@ function App(){
     return () => clearInterval(timer);
   }, [timeLeft]);
 
+  function togglePopUp(){
+    setIsPopUpOpen(!isPopUpOpen);
+  }
+
+
   // This function gets called on later and starts the game
   function startGame(){
     setPoints(0); // Sets points to zero
-    setSpecialButtonRow(Math.floor(Math.random(0,GridRows-1) * 4));   // Changes the row of the special button to a row inside the array
-    setSpecialButtonCol(Math.floor(Math.random(0,GridCols-1) * 4));   // Changes the column of the special button to a column inside the array
+    setSpecialButtonRow(Math.floor(Math.random() * GridNum));   // Changes the row of the special button to a row inside the array
+    setSpecialButtonCol(Math.floor(Math.random() * GridNum));   // Changes the column of the special button to a column inside the array
     setTimeLeft(time);  // Sets the timer to 30 sec
   }
 
@@ -66,8 +73,8 @@ function App(){
     // If the clicked button is the correct button, then it will run the code underneath
     if (specialButtonRow === clickedRow && specialButtonCol === clickedCol) {
       setPoints(points+1);  // Adds one point to the point tally
-      let newRow = Math.random(0,GridRows-1) * 4; // Changes the row to a random row inside the range of rows
-      let newCol = Math.random(0,GridCols-1) * 4; // Changes the column to a random column inside the range of columns
+      let newRow = Math.random() * GridNum; // Changes the row to a random row inside the range of rows
+      let newCol = Math.random() * GridNum; // Changes the column to a random column inside the range of columns
       // This part is not really important, but it will try to redirect the special button to a new column if 
       // it sees that the button will be tha same as the one before. (still has a small chance of that happening)
       setSpecialButtonRow(Math.floor(newRow)); 
@@ -93,25 +100,34 @@ function App(){
 
   return (
     <>
-      <header 
-          className='Main-Title'>
-            {mainTitle}
-      </header>
-        <div className="main-game">
-          <div className="point-tracker">
-              {points}
-          </div>
-          <GridMaker
-              specialButtonRow={specialButtonRow} 
-              specialButtonCol={specialButtonCol} 
-              changeSpecialButton={changeSpecialButton}
-              GridRows = {GridRows}
-              GridCols = {GridCols}
-          />
-          <div className="time-tracker">
-            {timeLeft > 0 ? `${timeLeft}s` : "Click Start!"} {/* If the time is zero, it will put the click start instead */}
-          </div>
+      <div className="top-bar">
+        <header 
+            className='main-title'>
+              {mainTitle}
+        </header>
+        <button 
+        className = "info-button"
+        onClick = {togglePopUp}
+        >
+          ?
+        </button>
+      </div>
+      {isPopUpOpen && <PopUp closePopUp={togglePopUp} />}
+      <div className="main-game">
+        <div className="point-tracker">
+            {points}
         </div>
+        <GridMaker
+            specialButtonRow={specialButtonRow} 
+            specialButtonCol={specialButtonCol} 
+            changeSpecialButton={changeSpecialButton}
+            GridRows = {GridNum}
+            GridCols = {GridNum}
+        />
+        <div className="time-tracker">
+          {timeLeft > 0 ? `${timeLeft}s` : "Click Start!"} {/* If the time is zero, it will put the click start instead */}
+        </div>
+      </div>
       <div className="start-reset" >
           <StartButton onClick={startGame} /> <ResetButton onClick={ResetGame} />
       </div>
