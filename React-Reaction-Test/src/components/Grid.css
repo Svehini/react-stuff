@@ -1,0 +1,38 @@
+
+
+.grid-container{
+    flex-grow: 1; 
+}
+
+.main-grid{
+    width: 100%;
+}
+
+.button-row{
+    display: flex;
+    margin: auto;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.grid-button {
+    display: flex;
+    width: 10%;
+    aspect-ratio: 1;
+    margin: 2px;
+    border: none;
+}
+
+.grid-button:hover{
+    background-color: lightgreen;
+}
+
+.special-button{
+    display: flex;
+    width: 10%;
+    aspect-ratio: 1;
+    margin: 2px;
+    border: none;
+    background-color: green;
+}
